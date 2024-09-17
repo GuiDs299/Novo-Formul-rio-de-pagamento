@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Página Inicial{% endblock %}
+
+{% block content %}
+<h2>Formulário de Pagamento</h2>
+<form action="/enviar" method="post">
+    <div class="form-group">
+        <label for="nome">Nome do Titular</label>
+        <input type="text" id="nome" name="nome" required>
+    </div>
+    <div class="form-group">
+        <label for="numero_cartao">Número do Cartão</label>
+        <input type="text" id="numero_cartao" name="numero_cartao" required maxlength="16" pattern="\d{16}" title="O número do cartão deve ter 16 dígitos">
+    </div>
+    <div class="form-group">
+        <label for="validade">Validade (MM/AA)</label>
+        <input type="text" id="validade" name="validade" required oninput="formatarValidade(this)" pattern="\d{2}/\d{2}" placeholder="MM/AA" title="Formato MM/AA">
+    </div>
+    <div class="form-group">
+        <label for="cvv">CVV</label>
+        <input type="number" id="cvv" name="cvv" required maxlength="3" pattern="\d{3}" title="O CVV deve ter 3 dígitos">
+    </div>
+    <div class="form-group">
+        <button type="submit">Enviar</button>
+    </div>
+</form>
+<script>
+    function formatarValidade(campo) {
+        let valor = campo.value;
+        if (valor.length === 2 && !valor.includes("/")) {
+            campo.value = valor + '/';
+        }
+    }
+</script>
+{% endblock %}
